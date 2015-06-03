@@ -18,18 +18,33 @@
  * @package WordPress
  */
 
-// ** MySQL settings - You can get this info from your web host ** //
-/** The name of the database for WordPress */
-define('DB_NAME', 'database_name_here');
+if ($_SERVER['REMOTE_ADDR']=='127.0.0.1') {
+    define('WP_ENV', 'dev');
+} else {
+    define('WP_ENV', 'prod');
+}
 
-/** MySQL database username */
-define('DB_USER', 'username_here');
+if (WP_ENV == 'dev') {
+    define('WP_SITEURL', 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/wordpress');
+    define('WP_HOME',    'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT']);
+    define('WP_CONTENT_DIR', $_SERVER['DOCUMENT_ROOT'] . '/wp-content');
+    define('WP_CONTENT_URL', 'http://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . '/wp-content');
 
-/** MySQL database password */
-define('DB_PASSWORD', 'password_here');
+    define('DB_NAME', 'radpress.dev');
+    define('DB_USER', 'lookrad');
+    define('DB_PASSWORD', 'W4nd3r1u5t!');
+    define('DB_HOST', 'localhost');
+} else {
+    define('WP_SITEURL', 'http://' . $_SERVER['SERVER_NAME'] . '/wordpress');
+    define('WP_HOME',    'http://' . $_SERVER['SERVER_NAME']);
+    define('WP_CONTENT_DIR', $_SERVER['DOCUMENT_ROOT'] . '/wp-content');
+    define('WP_CONTENT_URL', 'http://' . $_SERVER['SERVER_NAME'] . '/wp-content');
 
-/** MySQL hostname */
-define('DB_HOST', 'localhost');
+    define('DB_NAME', 'radpress');
+    define('DB_USER', 'lookrad');
+    define('DB_PASSWORD', 'W4nd3r1u5t!');
+    define('DB_HOST', 'ec2-52-26-64-89.us-west-2.compute.amazonaws.com');
+}
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
